@@ -1,24 +1,29 @@
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Banco {
 
+	@Setter
+	@Getter
 	private String nome;
-	private List<Conta> contas;
+	private List<Conta> contas = new ArrayList<>();
 
-	public String getNome() {
-		return nome;
+	public void setConta(Conta conta) {
+		this.contas.add(conta);
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public List<String> clientesBanco(){
+		return this.contas.stream()
+				.map(conta -> conta.getCliente().getNome())
+				.collect(Collectors.toList());
 	}
 
-	public List<Conta> getContas() {
-		return contas;
+	public void imprimirClientesBanco() {
+		System.out.printf("\n=== Clientes do %s ===\n", this.nome);
+		clientesBanco().forEach((System.out::println));
 	}
-
-	public void setContas(List<Conta> contas) {
-		this.contas = contas;
-	}
-
 }
